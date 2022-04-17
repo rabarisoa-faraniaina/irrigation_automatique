@@ -1,19 +1,23 @@
-import time
-import meteo
-import getArduinoData
-import schedule
+import keras
+import tensorflow as tf
 
-def run():
-    response = meteo.usePyown()
-    #meteo.displayResults(response)
-    #print("Hourly : "+ str(response['hourly']))
-    print("Program started")
-    #schedule.every(10).seconds.do(meteo.usePyown)
-    #schedule.every(10).seconds.do(getArduinoData.getDataFromArduino())
+def run(temp, moisture):
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    sample = {
+        "temp": temp,
+        "moisture": moisture,
+    }
+    # call saved model
+    old_model = keras.models.load_model('my_model')
+    input_dic_test = {name: tf.convert_to_tensor([value]) for name, value in sample.items()}
+    predictions_test = old_model.predict(input_dic_test,batch_size=1)
 
-if __name__ == '__main__':
+    # real value
+    print("Real predictions: "+str(predictions_test))
+
+    # round the value
+    print("Round: "+str(round(predictions_test[0][0])))
+
+if __name__ == "__main__":
     run()
+
