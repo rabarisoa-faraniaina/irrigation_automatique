@@ -1,15 +1,27 @@
 import time
-import meteo
-# import getArduinoData
+import ubidotsAPI
 import schedule
+import meteoAPI
+
+# -------------- MAIN PROGRAM -----------------
+
+NUMBER_OF_MINUTES = 0.1
+
+def newAnalysis():
+    print("\n---------------------------- NEW ANALYSIS",
+                                 "(every", NUMBER_OF_MINUTES, "min) -----------------------------")
+    # get data from arduino every hour
+    ubidotsAPI.getData()
+
+    # get data from meteo every hour
+    meteoAPI.getData()
+
+    # analyse data to open or close electrovanne
+
 
 def run():
-    print("Program started")
-    response = meteo.usePyown()
-    # meteo.displayResults(response)
-    # print("Hourly : "+ str(response['hourly']))
-    schedule.every(10).seconds.do(meteo.usePyown)
-    #schedule.every(10).seconds.do(getArduinoData.getDataFromArduino())
+    print("Program running ...")
+    schedule.every(NUMBER_OF_MINUTES).minutes.do(newAnalysis)
 
     while True:
         schedule.run_pending()

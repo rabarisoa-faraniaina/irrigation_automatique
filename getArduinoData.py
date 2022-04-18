@@ -3,7 +3,7 @@ from datetime import datetime,time
 import pyfirmata
 import re
 import requests
-import export
+import exportCSV
 
 list_values = []
 list_in_floats = []
@@ -35,7 +35,7 @@ def getDataFromArduino():
             exported_value = [date_formatted,value[0],value[1]]
             temp = value[0]
             hum = value[1]
-            export.to_csv(exported_value)
+            exportCSV.sensors_data_to_csv(exported_value)
             print("Data collected: "+ str(printed_value))
         print("Data collected: "+ str(list_in_floats))
     
