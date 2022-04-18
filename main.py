@@ -16,7 +16,7 @@ def newAnalysis():
     # get data from meteo every hour
     meteoAPI.getData()
 
-    # analyse data to open or close electrovanne
+    # todo analyse data to open or close electrovanne
 
 
 def run():
