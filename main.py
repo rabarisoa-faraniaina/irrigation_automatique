@@ -2,13 +2,19 @@ import time
 import ubidotsAPI
 import schedule
 import meteoAPI
+from datetime import datetime
 
 # -------------- MAIN PROGRAM -----------------
 
 NUMBER_OF_MINUTES = 0.1
 
 def newAnalysis():
-    print("\n---------------------------- NEW ANALYSIS",
+    # get current date and time
+    now = datetime.now()
+    date_formatted = now.strftime("%d/%m/%Y %H:%M:%S")
+
+    print("\n------------------------ NEW ANALYSIS",
+                                date_formatted,
                                  "(every", NUMBER_OF_MINUTES, "min) -----------------------------")
     # get data from arduino every hour
     ubidotsAPI.getData()
