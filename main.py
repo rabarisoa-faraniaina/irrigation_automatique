@@ -1,7 +1,8 @@
 import time
 import ubidotsAPI
 import schedule
-import meteoAPI
+import MeteoAPI
+import manageValveAI
 from datetime import datetime
 
 # -------------- MAIN PROGRAM -----------------
@@ -17,13 +18,28 @@ def newAnalysis():
                                 date_formatted,
                                  "(every", NUMBER_OF_MINUTES, "min) -----------------------------")
     # get data from arduino every hour
-    ubidotsAPI.getData()
+    sensorsData = ubidotsAPI.getData()
 
     # get data from meteo every hour
-    meteoAPI.getData()
+    meteoData = MeteoAPI.getData()
 
-    # todo analyse data to open or close electrovanne
 
+    # analyse data to open or close electrovanne
+
+    altidud = 23  # Avignon
+    phi = 43.9493  # lattitude Avignon
+    soilType = 3   # Argileux (peu drainant)
+    fieldArea = 10000  # field area(m2)
+
+    soilHumidity = sensorsData[1]
+    soilTemperature = sensorsData[2]
+
+    airHumidity = meteoData[0]
+    airTemperature = meteoData[1]
+    rain = meteoData[2]
+    windSpeed = meteoData[3]
+
+    manageValveAI.manageValve(altidud, phi, soilType, soilHumidity, soilTemperature, airHumidity, airTemperature, rain, windSpeed, fieldArea)
 
 def run():
     print("Program running ...")

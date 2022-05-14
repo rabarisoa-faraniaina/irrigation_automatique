@@ -52,3 +52,4 @@ def getData():
     print("Sensors data - ", lastMeasureDatetime, " => Humidity:", moistureValue, ", Temperature:", temperatureValue)
     data_to_save = [lastMeasureDatetime, temperatureValue, moistureValue]
     exportCSV.sensors_data_to_csv(data_to_save)
+    return [lastMeasureDatetime, moistureValue, temperatureValue]
