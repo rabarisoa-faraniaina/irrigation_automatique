@@ -26,8 +26,13 @@ def newAnalysis():
 
     # analyse data to open or close electrovanne
 
-    altidud = 23  # Avignon
-    phi = 43.9493  # lattitude Avignon
+    altidud = 23  # Avignon /** take from weatherAPI*/
+    dataa = MeteoAPI.getLonLat("Avignon")
+    
+    
+    #phi = 43.9493  # lattitude Avignon 
+    # take from weatherAPI
+    phi = int(dataa[0]['lat']) 
     soilType = 3   # Argileux (peu drainant)
     fieldArea = 10000  # field area(m2)
 
